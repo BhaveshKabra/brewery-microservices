@@ -7,5 +7,5 @@ import java.util.UUID;
 
 @Service
 public interface BeerService {
-    BeerDTO getbeer(UUID beerid);
+    BeerDTO getBeer(UUID beerid);
 }
