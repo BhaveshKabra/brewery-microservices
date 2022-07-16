@@ -8,4 +8,10 @@ import java.util.UUID;
 @Service
 public interface CustomerService {
     CustomerDTO getCustomer(UUID customerId);
+
+    CustomerDTO save(CustomerDTO customerDTO);
+
+    void updateCustomer(UUID customerId, CustomerDTO customerDTO);
+
+    void deleteByid(UUID customerId);
 }
