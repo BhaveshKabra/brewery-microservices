@@ -9,6 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,19 +31,19 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomer(customerId),HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity handlePost(@RequestBody CustomerDTO customerDTO)
+    public ResponseEntity<CustomerDTO> handlePost(@Valid @RequestBody CustomerDTO customerDTO)
     {
         CustomerDTO savedCustomerDto= customerService.save(customerDTO);
         HttpHeaders headers=new HttpHeaders();
         headers.add("location","/api/v1/customer/"+savedCustomerDto.getId().toString());
-        return new ResponseEntity(headers,HttpStatus.CREATED);
+        return new ResponseEntity<>(headers,HttpStatus.CREATED);
 
     }
     @PutMapping({"/{customerId}"})
-    public ResponseEntity handleUpdate(@PathVariable UUID customerId, @RequestBody CustomerDTO customerDTO)
+    public ResponseEntity<CustomerDTO> handleUpdate(@PathVariable UUID customerId, @Valid @RequestBody CustomerDTO customerDTO)
     {
         customerService.updateCustomer(customerId,customerDTO);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping({"/{customerId}"})
@@ -47,5 +51,13 @@ public class CustomerController {
     public void deleteCustomer(@PathVariable UUID customerId)
     {
         customerService.deleteByid(customerId);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<List<String>> validationErrorHandler(ConstraintViolationException e)
+    {
+        List<String> list=new ArrayList<>(e.getConstraintViolations().size());
+        e.getConstraintViolations().forEach(violation-> list.add(violation.getPropertyPath()+":"+violation.getMessage()) );
+        return new ResponseEntity<>(list,HttpStatus.BAD_REQUEST);
     }
 }
