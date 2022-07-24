@@ -4,7 +4,7 @@ import org.bhavesh.microservice.brewery.model.Beer;
 import org.bhavesh.microservice.brewery.model.BeerDTO;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(uses = {DateMapper.class})
 public interface BeerMapper {
     BeerDTO beerToBeerDTO(Beer beer);
     Beer beerDTOToBeer(BeerDTO beer);

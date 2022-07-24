@@ -57,10 +57,10 @@
 			<artifactId>ojdbc10</artifactId>
 			<version>19.15.0.0.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
+		<!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-processor</artifactId>
+			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding -->
@@ -69,13 +69,6 @@
 			<artifactId>lombok-mapstruct-binding</artifactId>
 			<version>${lombok.mapstruct.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>1.5.2.Final</version>
-		</dependency>
-
-
 	</dependencies>
 
 	<build>
